@@ -1,0 +1,28 @@
+:root {
+  --size: 150px;
+  --bord: 12px;
+  --bgColor: rgb(89 109 120);
+}
+
+.radial {
+  width: var(--size);
+  height: var(--size);
+  margin: 1em auto;
+  border-radius: 50%;
+  position: relative;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.radial::after {
+  content: "";
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  transform: translate(-50%, -50%);
+  width: calc(100% - var(--bord));
+  height: calc(100% - var(--bord));
+  background: var(--bgColor);
+  border-radius: inherit;
+}

@@ -1,11 +1,12 @@
 "use client";
 
-import { useEffect } from "react";
+import { useEffect, useMemo, useState } from "react";
 import { useTimer } from "react-timer-hook";
 import InputMask from "react-input-mask";
 import Image from "next/image";
 import pause from "/public/pause.svg";
 import play from "/public/play.svg";
+import "./timer.css";
 
 interface Props {
   expiryTimestamp: Date;
@@ -16,13 +17,26 @@ interface Props {
     minutes: number;
     seconds: number;
   }) => void;
+  totalTimerSeconds: number;
 }
 
-const Pause = <Image src={pause} alt="pause" width={20} height={20} />;
-const Play = <Image src={play} alt="play" width={20} height={20} />;
+const PauseImage = <Image src={pause} alt="pause" width={20} height={20} />;
+const PlayImage = <Image src={play} alt="play" width={20} height={20} />;
 
-export default function Timer({ expiryTimestamp, onChange }: Props) {
-  const { isRunning, minutes, pause, restart, resume, seconds } = useTimer({
+export default function Timer({
+  expiryTimestamp,
+  onChange,
+  totalTimerSeconds,
+}: Props) {
+  const {
+    isRunning,
+    minutes,
+    pause,
+    restart,
+    resume,
+    seconds,
+    totalSeconds: totalRemainingSeconds,
+  } = useTimer({
     expiryTimestamp,
     autoStart: false,
   });
@@ -31,6 +45,12 @@ export default function Timer({ expiryTimestamp, onChange }: Props) {
   useEffect(() => {
     restart(expiryTimestamp, false);
   }, [expiryTimestamp, restart]);
+
+  // animate the radial progress as the timer is updated.
+  const radialPercentage = useMemo(
+    () => (totalRemainingSeconds / totalTimerSeconds) * 100,
+    [totalRemainingSeconds, totalTimerSeconds],
+  );
 
   // parse the masked input prior to invoking the 'onChange' callback
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -52,17 +72,27 @@ export default function Timer({ expiryTimestamp, onChange }: Props) {
   return (
     <div className="flex h-full flex-col">
       <div className="flex grow">
-        <InputMask
-          className="bg-transparent text-center text-4xl"
-          mask="99:99"
-          onChange={handleChange}
-          value={formattedValue}
-        />
+        <div
+          className="radial"
+          style={{
+            backgroundImage: `conic-gradient(white ${radialPercentage}%, rgb(89 109 120) ${100 - radialPercentage}%)`,
+          }}
+        >
+          <InputMask
+            className="z-10 w-full bg-transparent text-center text-4xl"
+            mask="99:99"
+            onChange={handleChange}
+            value={formattedValue}
+          />
+        </div>
       </div>
       <div className="flex justify-around p-6 text-lg">
         <button onClick={handleAddMinute}>+1:00</button>
-        <button onClick={() => (isRunning ? pause() : resume())}>
-          {isRunning ? Pause : Play}
+        <button
+          className="rounded-full bg-dark-gray-800 p-4"
+          onClick={() => (isRunning ? pause() : resume())}
+        >
+          {isRunning ? PauseImage : PlayImage}
         </button>
         <button onClick={handleReset}>Reset</button>
       </div>
