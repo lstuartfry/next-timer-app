@@ -3,6 +3,9 @@
 import { useEffect } from "react";
 import { useTimer } from "react-timer-hook";
 import InputMask from "react-input-mask";
+import Image from "next/image";
+import pause from "/public/pause.svg";
+import play from "/public/play.svg";
 
 interface Props {
   expiryTimestamp: Date;
@@ -15,8 +18,11 @@ interface Props {
   }) => void;
 }
 
+const Pause = <Image src={pause} alt="pause" width={20} height={20} />;
+const Play = <Image src={play} alt="play" width={20} height={20} />;
+
 export default function Timer({ expiryTimestamp, onChange }: Props) {
-  const { seconds, minutes, pause, restart } = useTimer({
+  const { isRunning, minutes, pause, restart, resume, seconds } = useTimer({
     expiryTimestamp,
     autoStart: false,
   });
@@ -51,6 +57,9 @@ export default function Timer({ expiryTimestamp, onChange }: Props) {
       </div>
       <div className="flex justify-center py-6">
         <button onClick={handleAddMinute}>+1:00</button>
+        <button onClick={() => (isRunning ? pause() : resume())}>
+          {isRunning ? Pause : Play}
+        </button>
       </div>
     </div>
   );
