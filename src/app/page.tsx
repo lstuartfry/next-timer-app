@@ -28,9 +28,6 @@ export default function App() {
         <div className="flex flex-1 items-center justify-center bg-dark-gray-500">
           <Timer expiryTimestamp={timer} onChange={handleChange} />
         </div>
-        <div className="flex justify-center bg-dark-gray-500 px-4 py-6">
-          footer
-        </div>
       </div>
     </main>
   );

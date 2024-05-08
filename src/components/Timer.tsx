@@ -32,15 +32,26 @@ export default function Timer({ expiryTimestamp, onChange }: Props) {
     onChange({ minutes: Number(minutes), seconds: Number(seconds) });
   };
 
+  const handleAddMinute = () => {
+    onChange({ minutes: minutes + 1, seconds });
+  };
+
   // format the value to match the desired input mask
   const formattedValue = `${minutes > 9 ? minutes : `0${minutes}`}${seconds > 9 ? seconds : `0${seconds}`}`;
 
   return (
-    <InputMask
-      className="bg-transparent text-center text-4xl"
-      mask="99:99"
-      onChange={handleChange}
-      value={formattedValue}
-    />
+    <div className="flex h-full flex-col">
+      <div className="flex grow">
+        <InputMask
+          className="bg-transparent text-center text-4xl"
+          mask="99:99"
+          onChange={handleChange}
+          value={formattedValue}
+        />
+      </div>
+      <div className="flex justify-center py-6">
+        <button onClick={handleAddMinute}>+1:00</button>
+      </div>
+    </div>
   );
 }
