@@ -13,6 +13,9 @@ const config: Config = {
         darkGray: "#3A474E",
         mediumGray: "#596D78",
       },
+      fontFamily: {
+        roboto: ["Roboto", "sans-serif"],
+      },
     },
   },
   plugins: [],
