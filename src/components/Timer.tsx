@@ -6,9 +6,10 @@ import InputMask from "react-input-mask";
 export default function Timer({ expiryTimestamp }: { expiryTimestamp: Date }) {
   const { seconds, minutes } = useTimer({
     expiryTimestamp,
-    autoStart: true,
+    autoStart: false,
   });
-  const formattedValue = `${minutes > 9 ? minutes : `0${minutes}`}${seconds}`;
+
+  const formattedValue = `${minutes > 9 ? minutes : `0${minutes}`}${seconds > 9 ? seconds : `0${seconds}`}`;
 
   return (
     <InputMask
