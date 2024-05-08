@@ -42,6 +42,10 @@ export default function Timer({ expiryTimestamp, onChange }: Props) {
     onChange({ minutes: minutes + 1, seconds });
   };
 
+  const handleReset = () => {
+    onChange({ minutes: 0, seconds: 0 });
+  };
+
   // format the value to match the desired input mask
   const formattedValue = `${minutes > 9 ? minutes : `0${minutes}`}${seconds > 9 ? seconds : `0${seconds}`}`;
 
@@ -55,11 +59,12 @@ export default function Timer({ expiryTimestamp, onChange }: Props) {
           value={formattedValue}
         />
       </div>
-      <div className="flex justify-center py-6">
+      <div className="flex justify-around p-6 text-lg">
         <button onClick={handleAddMinute}>+1:00</button>
         <button onClick={() => (isRunning ? pause() : resume())}>
           {isRunning ? Pause : Play}
         </button>
+        <button onClick={handleReset}>Reset</button>
       </div>
     </div>
   );
