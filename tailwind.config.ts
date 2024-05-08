@@ -9,9 +9,9 @@ const config: Config = {
   theme: {
     extend: {
       colors: {
-        darkerGray: "#283137",
-        darkGray: "#3A474E",
-        mediumGray: "#596D78",
+        "dark-gray-800": "#283137",
+        "dark-gray-700": "#3A474E",
+        "dark-gray-500": "#596D78",
       },
       fontFamily: {
         roboto: ["Roboto", "sans-serif"],
