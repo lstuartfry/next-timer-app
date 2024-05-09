@@ -1,6 +1,6 @@
 :root {
-  --size: 250px;
-  --bord: 12px;
+  --size: 12rem;
+  --bord: 1rem;
   --bgColor: rgb(89 109 120);
 }
 

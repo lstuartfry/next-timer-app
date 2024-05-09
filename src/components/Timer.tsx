@@ -8,7 +8,6 @@ import Image from "next/image";
 import Radial from "./Radial";
 import pause from "/public/pause.svg";
 import play from "/public/play.svg";
-import "./timer.css";
 
 interface Props {
   expiryTimestamp: Date;
@@ -58,10 +57,7 @@ export default function Timer({ expiryTimestamp, onChange, totalTimerSeconds }: 
   return (
     <div className="flex h-full w-full flex-col">
       <div className="flex grow items-center">
-        <Radial
-          totalTimerSeconds={totalRemainingSeconds}
-          totalRemainingSeconds={totalRemainingSeconds}
-        >
+        <Radial totalTimerSeconds={totalTimerSeconds} totalRemainingSeconds={totalRemainingSeconds}>
           <InputMask
             className="z-10 w-full bg-transparent text-center text-4xl"
             mask="99:99"

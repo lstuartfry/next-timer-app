@@ -1,11 +1,12 @@
 "use client";
 
 import { useMemo } from "react";
+import "./radial.css";
 
 interface Props {
   totalTimerSeconds: number;
   totalRemainingSeconds: number;
-  children: React.ReactElement;
+  children?: React.ReactElement;
 }
 
 export default function Radial({ totalTimerSeconds, totalRemainingSeconds, children }: Props) {
@@ -23,11 +24,7 @@ export default function Radial({ totalTimerSeconds, totalRemainingSeconds, child
 
   return (
     <div
-      className="radial"
-      style={{
-        backgroundImage: radialPercentage ? `conic-gradient(${radialPercentage})` : "none",
-      }}
-      data-testid="radial"
+      className={`radial ${radialPercentage ? `bg-[conic-gradient(${radialPercentage})]` : "bg-none"}`}
     >
       {children}
     </div>
