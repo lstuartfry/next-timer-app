@@ -6,6 +6,7 @@ import InputMask from "react-input-mask";
 import Image from "next/image";
 
 import Radial from "./Radial";
+import Button from "./Button";
 import pause from "/public/pause.svg";
 import play from "/public/play.svg";
 
@@ -67,15 +68,15 @@ export default function Timer({ expiryTimestamp, onChange, totalTimerSeconds }: 
         </Radial>
       </div>
       <div className="flex justify-around p-6 text-lg">
-        <button onClick={handleAddMinute}>+1:00</button>
+        <Button onClick={handleAddMinute}>+1:00</Button>
         <button
-          className="rounded-full bg-dark-gray-800 p-4"
+          className="rounded-full border-2 border-transparent bg-dark-gray-800 p-4 hover:border-white"
           onClick={() => (isRunning ? pause() : resume())}
           data-testid="timerActionButton"
         >
           {isRunning ? PauseImage : PlayImage}
         </button>
-        <button onClick={handleReset}>Reset</button>
+        <Button onClick={handleReset}>Reset</Button>
       </div>
     </div>
   );
