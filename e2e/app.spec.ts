@@ -1,6 +1,8 @@
 import { test, expect } from "@playwright/test";
 
-test("should display a timer with +1:00, play and reset buttons", async ({ page }) => {
+test("timer displays correctly, can be started/reset/add one minute, accessed via keyboard", async ({
+  page,
+}) => {
   // Start from the index page (the baseURL is set via the webServer in the playwright.config.ts)
   await page.goto("/");
   // The page should contain an h1 with "Timer"
@@ -22,4 +24,14 @@ test("should display a timer with +1:00, play and reset buttons", async ({ page 
   // click the Reset button and assert the timer has stopped
   await page.getByRole("button", { name: "Reset" }).click();
   await expect(timer).toHaveValue("00:00");
+
+  // navigate via keyboard to the timer input and enter a new val
+  await page.keyboard.press("Tab");
+  await page.keyboard.press("Tab");
+  await expect(timer).toBeFocused();
+
+  // press the 'left' key to de-select the entire input
+  await page.keyboard.press("ArrowLeft");
+  await timer.fill("1010");
+  await expect(timer).toHaveValue("10:10");
 });
