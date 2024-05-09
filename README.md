@@ -16,21 +16,26 @@ bun dev
 
 Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+## Testing - Jest (unit) & Playwright (e2e)
 
-This project uses [`next/font`](https://nextjs.org/docs/basic-features/font-optimization) to automatically optimize and load Inter, a custom Google Font.
+TODO - add blurb about playwright testing. Opting for E2E tests for the application. Jest is used for
 
-## Learn More
+```bash
+  # Run the end-to-end tests.
+  npx playwright test
 
-To learn more about Next.js, take a look at the following resources:
+  # Start the interactive UI mode.
+  npx playwright test --ui
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+  # Run the tests only on Desktop Chrome.
+  npx playwright test --project=chromium
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js/) - your feedback and contributions are welcome!
+  # Runs the tests in a specific file.
+  npx playwright test example
 
-## Deploy on Vercel
+  # Runs the tests in debug mode.
+  npx playwright test --debug
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
-
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/deployment) for more details.
+  # Auto generate tests with Codegen.
+  npx playwright codegen
+```

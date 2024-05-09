@@ -77,7 +77,7 @@ export default function Timer({
 
   return (
     <div className="flex h-full w-full flex-col">
-      <div className="mt-6 flex grow">
+      <div className="flex grow items-center">
         <div
           className="radial"
           style={{
@@ -85,6 +85,7 @@ export default function Timer({
               ? `conic-gradient(${radialPercentage})`
               : "none",
           }}
+          data-testid="radial"
         >
           <InputMask
             className="z-10 w-full bg-transparent text-center text-4xl"
@@ -99,6 +100,7 @@ export default function Timer({
         <button
           className="rounded-full bg-dark-gray-800 p-4"
           onClick={() => (isRunning ? pause() : resume())}
+          data-testid="timerActionButton"
         >
           {isRunning ? PauseImage : PlayImage}
         </button>
