@@ -48,7 +48,10 @@ export default function Timer({
 
   // animate the radial progress as the timer is updated.
   const radialPercentage = useMemo(() => {
+    if (!totalTimerSeconds) return null;
     const percentage = (totalRemainingSeconds / totalTimerSeconds) * 100;
+    // when the timer is reset, the totalTimerSeconds variable will equal '0';
+    // when this occurs, we will not display any radial in the UI.
     if (percentage >= 50) {
       return `white ${percentage}%, rgb(89 109 120) ${100 - percentage}%`;
     }
@@ -78,7 +81,9 @@ export default function Timer({
         <div
           className="radial"
           style={{
-            backgroundImage: `conic-gradient(${radialPercentage})`,
+            backgroundImage: radialPercentage
+              ? `conic-gradient(${radialPercentage})`
+              : "none",
           }}
         >
           <InputMask
