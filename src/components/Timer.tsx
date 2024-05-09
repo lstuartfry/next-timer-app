@@ -1,9 +1,11 @@
 "use client";
 
-import { useEffect, useMemo } from "react";
+import { useEffect } from "react";
 import { useTimer } from "react-timer-hook";
 import InputMask from "react-input-mask";
 import Image from "next/image";
+
+import Radial from "./Radial";
 import pause from "/public/pause.svg";
 import play from "/public/play.svg";
 import "./timer.css";
@@ -36,18 +38,6 @@ export default function Timer({ expiryTimestamp, onChange, totalTimerSeconds }: 
     restart(expiryTimestamp, false);
   }, [expiryTimestamp, restart]);
 
-  // animate the radial progress as the timer is updated.
-  const radialPercentage = useMemo(() => {
-    if (!totalTimerSeconds) return null;
-    const percentage = (totalRemainingSeconds / totalTimerSeconds) * 100;
-    // when the timer is reset, the totalTimerSeconds variable will equal '0';
-    // when this occurs, we will not display any radial in the UI.
-    if (percentage >= 50) {
-      return `white ${percentage}%, rgb(89 109 120) ${100 - percentage}%`;
-    }
-    return `white ${percentage}%, rgb(89 109 120) ${percentage}%`;
-  }, [totalRemainingSeconds, totalTimerSeconds]);
-
   // parse the masked input prior to invoking the 'onChange' callback
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const [minutes, seconds] = e.target.value.split(":");
@@ -68,12 +58,9 @@ export default function Timer({ expiryTimestamp, onChange, totalTimerSeconds }: 
   return (
     <div className="flex h-full w-full flex-col">
       <div className="flex grow items-center">
-        <div
-          className="radial"
-          style={{
-            backgroundImage: radialPercentage ? `conic-gradient(${radialPercentage})` : "none",
-          }}
-          data-testid="radial"
+        <Radial
+          totalTimerSeconds={totalRemainingSeconds}
+          totalRemainingSeconds={totalRemainingSeconds}
         >
           <InputMask
             className="z-10 w-full bg-transparent text-center text-4xl"
@@ -81,7 +68,7 @@ export default function Timer({ expiryTimestamp, onChange, totalTimerSeconds }: 
             onChange={handleChange}
             value={formattedValue}
           />
-        </div>
+        </Radial>
       </div>
       <div className="flex justify-around p-6 text-lg">
         <button onClick={handleAddMinute}>+1:00</button>
