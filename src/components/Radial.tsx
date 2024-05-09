@@ -24,7 +24,11 @@ export default function Radial({ totalTimerSeconds, totalRemainingSeconds, child
 
   return (
     <div
-      className={`radial ${radialPercentage ? `bg-[conic-gradient(${radialPercentage})]` : "bg-none"}`}
+      className="radial"
+      style={{
+        backgroundImage: radialPercentage ? `conic-gradient(${radialPercentage})` : "none",
+      }}
+      data-testid={radialPercentage}
     >
       {children}
     </div>
