@@ -1,8 +1,6 @@
 import { test, expect } from "@playwright/test";
 
-test("should display a timer with +1:00, play and reset buttons", async ({
-  page,
-}) => {
+test("should display a timer with +1:00, play and reset buttons", async ({ page }) => {
   // Start from the index page (the baseURL is set via the webServer in the playwright.config.ts)
   await page.goto("/");
   // The page should contain an h1 with "Timer"

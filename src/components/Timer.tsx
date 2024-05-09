@@ -10,24 +10,14 @@ import "./timer.css";
 
 interface Props {
   expiryTimestamp: Date;
-  onChange: ({
-    minutes,
-    seconds,
-  }: {
-    minutes: number;
-    seconds: number;
-  }) => void;
+  onChange: ({ minutes, seconds }: { minutes: number; seconds: number }) => void;
   totalTimerSeconds: number;
 }
 
 const PauseImage = <Image src={pause} alt="pause" width={20} height={20} />;
 const PlayImage = <Image src={play} alt="play" width={20} height={20} />;
 
-export default function Timer({
-  expiryTimestamp,
-  onChange,
-  totalTimerSeconds,
-}: Props) {
+export default function Timer({ expiryTimestamp, onChange, totalTimerSeconds }: Props) {
   const {
     isRunning,
     minutes,
@@ -81,9 +71,7 @@ export default function Timer({
         <div
           className="radial"
           style={{
-            backgroundImage: radialPercentage
-              ? `conic-gradient(${radialPercentage})`
-              : "none",
+            backgroundImage: radialPercentage ? `conic-gradient(${radialPercentage})` : "none",
           }}
           data-testid="radial"
         >

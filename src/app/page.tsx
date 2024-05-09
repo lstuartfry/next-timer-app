@@ -11,25 +11,20 @@ export default function App() {
   time.setSeconds(time.getSeconds() + INITIAL_TIMER_SECONDS);
 
   const [timer, setTimer] = useState<Date>(time);
-  const [totalTimerSeconds, setTotalTimerSeconds] = useState<number>(
-    INITIAL_TIMER_SECONDS,
-  );
+  const [totalTimerSeconds, setTotalTimerSeconds] = useState<number>(INITIAL_TIMER_SECONDS);
 
-  const handleChange = useCallback(
-    ({ minutes, seconds }: { minutes: number; seconds: number }) => {
-      const newTime = new Date();
-      newTime.setMinutes(newTime.getMinutes() + minutes);
-      newTime.setSeconds(newTime.getSeconds() + seconds);
-      setTimer(newTime);
+  const handleChange = useCallback(({ minutes, seconds }: { minutes: number; seconds: number }) => {
+    const newTime = new Date();
+    newTime.setMinutes(newTime.getMinutes() + minutes);
+    newTime.setSeconds(newTime.getSeconds() + seconds);
+    setTimer(newTime);
 
-      // store a reference to the total duration of the timer.
-      // this will be used to calculate the percentage of time left compared to the original time,
-      // which will be used to "animate" the timer radial.
-      const diffInSeconds = minutes * 60 + seconds;
-      setTotalTimerSeconds(diffInSeconds);
-    },
-    [],
-  );
+    // store a reference to the total duration of the timer.
+    // this will be used to calculate the percentage of time left compared to the original time,
+    // which will be used to "animate" the timer radial.
+    const diffInSeconds = minutes * 60 + seconds;
+    setTotalTimerSeconds(diffInSeconds);
+  }, []);
 
   return (
     <main className="flex h-screen min-h-screen items-center justify-center bg-dark-gray-800 font-roboto text-white">
