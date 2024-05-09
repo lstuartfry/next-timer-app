@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useMemo, useState } from "react";
+import { useEffect, useMemo } from "react";
 import { useTimer } from "react-timer-hook";
 import InputMask from "react-input-mask";
 import Image from "next/image";
@@ -47,10 +47,13 @@ export default function Timer({
   }, [expiryTimestamp, restart]);
 
   // animate the radial progress as the timer is updated.
-  const radialPercentage = useMemo(
-    () => (totalRemainingSeconds / totalTimerSeconds) * 100,
-    [totalRemainingSeconds, totalTimerSeconds],
-  );
+  const radialPercentage = useMemo(() => {
+    const percentage = (totalRemainingSeconds / totalTimerSeconds) * 100;
+    if (percentage >= 50) {
+      return `white ${percentage}%, rgb(89 109 120) ${100 - percentage}%`;
+    }
+    return `white ${percentage}%, rgb(89 109 120) ${percentage}%`;
+  }, [totalRemainingSeconds, totalTimerSeconds]);
 
   // parse the masked input prior to invoking the 'onChange' callback
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -70,12 +73,12 @@ export default function Timer({
   const formattedValue = `${minutes > 9 ? minutes : `0${minutes}`}${seconds > 9 ? seconds : `0${seconds}`}`;
 
   return (
-    <div className="flex h-full flex-col">
-      <div className="flex grow">
+    <div className="flex h-full w-full flex-col">
+      <div className="mt-6 flex grow">
         <div
           className="radial"
           style={{
-            backgroundImage: `conic-gradient(white ${radialPercentage}%, rgb(89 109 120) ${100 - radialPercentage}%)`,
+            backgroundImage: `conic-gradient(${radialPercentage})`,
           }}
         >
           <InputMask
